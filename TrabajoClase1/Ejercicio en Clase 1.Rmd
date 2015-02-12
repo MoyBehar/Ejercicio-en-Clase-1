@@ -1,9 +1,13 @@
-Title
-========================================================
+---
+title: "Ejercicio en Clase 1 (Tipos de Cambio)"
+author: "Moisés Behar Cohen - 130582 y Pablo Mendoza Gayón - 131639"
+output: html_document
+---
 
+1.-
 
 ```{r LecturaDatos}
-directorio<-"C:/Users/hca/Documents/"
+directorio<-"C:/Users/Moy/Documents/ITAM/Estadistica Aplicada 1/2"
 setwd(directorio)
 TipoCambio<-read.table("./tipoCambioBanxico.txt",
                        sep="|",
@@ -11,49 +15,66 @@ TipoCambio<-read.table("./tipoCambioBanxico.txt",
                        header=TRUE)
 ```
 
-```{r TransformacionDatos}
+2.-
+
+```{r Transformación Datos y Gráficas}
 TipoCambio$Fecha.DOF<-as.Date(TipoCambio$Fecha.DOF,
                               format="%d/%m/%Y")
+TipoCambio$TC<-as.numeric(TipoCambio$TC)
+default<-par()
+par(mfrow=c(3,3))
+for(n in 2006:2014){
+    hist(TipoCambio$TC[which(as.numeric(format(TipoCambio$Fecha.DOF,"%Y"))==n)],
+       main = n,
+       col = "blue",
+       border = "white",
+       xlab = "Tipo de cambio del dolar de E.U.A", 
+       ylab = "Frecuencia",
+       xlim = c(9.9, 15.4),
+       ylim = c(0, 120),
+       breaks = seq(9.9, 15.4, length.out = 30))
+    abline(v=mean(TipoCambio$TC[which(as.numeric(format(TipoCambio$Fecha.DOF,"%Y"))==n)],na.rm=TRUE),
+           col="red")
+    abline(v=median(TipoCambio$TC[which(as.numeric(format(TipoCambio$Fecha.DOF,"%Y"))==n)],na.rm=TRUE),
+           col="black")
+}
+par(default)
 ```
-```{r}
 
+3.-
+
+Con las gráficas anteriores se puede observar que a través de los años el de cambio tiende a aumentar. Además notamos que la frecuencia de las observaciones de tipo de cambio alto aumenta con el paso de los años.
+
+4.-
+
+```{r}
+boxplot(TipoCambio$TC~as.factor(as.numeric(format(TipoCambio$Fecha.DOF,"%Y"))),range=0,varwidth=TRUE)
 ```
-```{r}
 
-```
-```{r}
+5.-
 
-```
-```{r}
+Los valores van aumentando con el transcurso del tiempo. Pero hay años como 2008 o 2010 en se presentan las mayores variaciones en el tipo de cambio. El sesgo presentado es generalmente del lado derecho. En contraste con la información obtenida usando histogramas, podemos ver una mayor variabilidad en los datos.
 
-```
-```{r}
+6.-
 
-```
 ```{r}
-
-```
-```{r}
-
-```
-```{r}
-
-```
-```{r}
-
-```
-```{r}
-
-```
-```{r}
-
-```
-```{r}
-
-```
-```{r}
-
-```
-```{r}
-
+Normal<-function(x){
+  (1/(sqrt(2*pi)))*exp(-(x^2)/2)
+}
+par(las=1)
+curve(Normal,
+      from=-4,to=4,
+      xlab = "x", ylab = "f(x)",
+      n = 100, 
+      col = "red",
+      main = expression(paste("Gráfica de la función ", 
+                              frac(1,sqrt(2*pi))*e^frac(-x^2,2))
+                        )
+)
+abline(v = 0, col = "black")
+punto <- data.frame(x = 0,
+                    y = Normal(0),
+                    etiqueta = "Valor máximo")
+points(punto$x, punto$y, col = "blue",pch=19)
+text(punto$x, punto$y, punto$etiqueta, adj=-.3,offset=2)
 ```
