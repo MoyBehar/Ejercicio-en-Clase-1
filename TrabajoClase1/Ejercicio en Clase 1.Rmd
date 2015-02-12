@@ -1,0 +1,59 @@
+Title
+========================================================
+
+
+```{r LecturaDatos}
+directorio<-"C:/Users/hca/Documents/"
+setwd(directorio)
+TipoCambio<-read.table("./tipoCambioBanxico.txt",
+                       sep="|",
+                       stringsAsFactors=FALSE,
+                       header=TRUE)
+```
+
+```{r TransformacionDatos}
+TipoCambio$Fecha.DOF<-as.Date(TipoCambio$Fecha.DOF,
+                              format="%d/%m/%Y")
+```
+```{r}
+
+```
+```{r}
+
+```
+```{r}
+
+```
+```{r}
+
+```
+```{r}
+
+```
+```{r}
+
+```
+```{r}
+
+```
+```{r}
+
+```
+```{r}
+
+```
+```{r}
+
+```
+```{r}
+
+```
+```{r}
+
+```
+```{r}
+
+```
+```{r}
+
+```
